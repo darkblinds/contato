@@ -41,9 +41,7 @@ class _HomePageState extends State<HomePage> {
           itemCount: contatos.length,
           itemBuilder: (context, index) {
             return _contactCard(context, index);
-
-            }
-          ),
+          }),
     );
   }
 
@@ -62,8 +60,7 @@ class _HomePageState extends State<HomePage> {
                   image: DecorationImage(
                       image: contatos[index].imagem != null
                           ? FileImage(File(contatos[index].imagem))
-                          : AssetImage("images/person.png")
-                  ),
+                          : AssetImage("images/person.png")),
                 ),
               ),
               Padding(
@@ -92,34 +89,34 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      onTap: (){
+      onTap: () {
         _showContactPage(contact: contatos[index]);
       },
     );
   }
-  void _showContactPage({Contato contact}) async{
-    final recContato =  await Navigator.push(context,
-      MaterialPageRoute(builder: (context) => ContactPage(contato: contact,))
-    );
-    if(recContato != null){
-      if(contact != null){
-        await helper.updateContact(recContato, contact);
-        await _getAllContacts();
-      }
-      else{
-        await helper.saveContact(recContato);
-      }
-      _getAllContacts();
+
+  void _showContactPage({Contato contact}) async {
+    final recContato = await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ContactPage(
+                  contato: contact,
+                )));
+
+    if (recContato != null && contact != null) {
+      await helper.updateContact(recContato, contact);
+      await _getAllContacts();
+    } else {
+      await helper.saveContact(recContato);
     }
+    _getAllContacts();
   }
 
-  void _getAllContacts(){
+  void _getAllContacts() {
     helper.getAllContacts().then((list) {
       setState(() {
         contatos = list;
       });
     });
   }
-
-
 }

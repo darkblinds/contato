@@ -61,9 +61,9 @@ class ContactHelper {
     return await dbContato.delete(contactTable, where: "$idColumn = ?", whereArgs: [id]);
   }
 
-  updateContact(Contato, contato) async{
+  updateContact(newContato, oldContato) async{
     Database dbContato = await db;
-    return await dbContato.update(contactTable, contato.toMap(), where: "$idColumn = ?", whereArgs: [contato.id]);
+    return await dbContato.update(contactTable, newContato.toMap(), where: "$idColumn = ?", whereArgs: [oldContato.id]);
   }
 
   getAllContacts() async{
